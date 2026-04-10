@@ -1,1 +1,25 @@
+# macOS
 .DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# Data (optional - uncomment if needed)
+# data/processed/
+# data/interim/
+
+# Large local datasets
+data/raw/LargeST/
