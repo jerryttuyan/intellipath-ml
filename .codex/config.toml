@@ -2,5 +2,4 @@
 [project]
 name = "intellipath-ml"
 
-[instructions]
-summary = "Machine learning project for CSUN COMP 542. Prefer minimal, readable Python. Keep experiments reproducible and document assumptions."
+instructions = "Machine learning project for CSUN COMP 542. Prefer minimal, readable Python. Keep experiments reproducible and document assumptions."
