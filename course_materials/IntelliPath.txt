@@ -1,0 +1,191 @@
+IntelliPath
+Project Proposal
+
+Meet the team
+Alex Pulikkottil
+Matilda Minasian
+Jerry Ttuyan
+
+The main idea of this project is to develop a navigation application that integrates real time traffic data and applies machine learning algorithms to learn from historical and live traffic patterns. Unlike traditional navigation systems that only react to current congestion, this app aims to predict traffic conditions and optimize routes proactively.
+Project Main Idea
+
+Problem Formulation
+Input: Historical and live traffic data
+Output: Future road speed/travel time
+Task: Supervised regression
+
+Commuting in traffic sucks…
+Los Angeles traffic follows strong recurring patterns such as rush hours, school pickup times, and major events. Most navigation systems react to congestion only after it happens, rather than anticipating predictable traffic behavior.
+This project aims to transform commuting into a smarter, less stressful experience by developing a navigation system that learns from both historical and live traffic data. By incorporating machine learning, the system can anticipate congestion and adapt route recommendations proactively.
+The core objective is to evaluate whether learning-based routing can outperform traditional static or greedy approaches when future traffic uncertainty is considered—ultimately reducing travel time and improving overall efficiency.
+
+Step 1
+Step 2
+Step 3
+Goal
+Step 1 — Traffic Prediction
+Use historical + live traffic data to predict future road speeds.
+
+Project Method
+Step 3 — Learning-Based Optimization (optional)
+Apply bandit learning to adapt route selection over time.
+Step 2 — Predictive Routing
+Use A* algorithm with predicted travel times to compute routes.
+Predictive, learning based route optimization
+
+System Architecture
+Traffic Data Sources
+↓
+Traffic Prediction Model
+↓
+Predicted Road Travel Times
+↓
+Road Network Graph
+↓
+A* Routing Algorithm
+↓
+Best Route Recommendation
+↓
+(Optional) Learning-based Route Adaptation
+The system first predicts future traffic conditions using machine learning.
+These predictions become the edge weights in a road network graph.
+The A* routing algorithm then computes the best path using predicted travel times rather than current congestion.
+
+Project Dataset
+Historical Data
+Open Map Data
+Live traffic Data
+TomTom Traffic APIs
+INRIX Traffic Data
+OpenStreetMap
+METR-LA Dataset
+Los Angeles GeoHub
+Caltrans PeMS
+METR-LA data
+• Traffic sensor data from Los Angeles highways
+• Widely used benchmark for traffic forecasting
+• Used to train traffic prediction models
+
+Feature Engineering
+Time of day (rush hour patterns) 
+
+Day of week (weekday vs weekend)
+
+Historical traffic speeds (recent time windows)
+
+Neighboring sensor data (spatial correlation)
+
+Model Choice
+Model: 
+Linear Regression
+Why:
+Simple and interpretable
+Fast to train and evaluate
+Strong baseline for comparison
+
+
+Graph Representation
+How to explain this in your presentation
+Nodes (circles)
+Represent intersections or junctions
+Edges (lines)
+Represent roads connecting intersections
+Weights (numbers on edges)
+Represent travel cost, such as:
+predicted travel time
+distance
+congestion level
+
+
+If your ML model predicts:
+Road A → B = 5 minutes
+Road B → C = 3 minutes
+Road A → D = 7 minutes
+Then the routing algorithm uses these predicted weights to compute the best path.
+“We represent the road network as a graph where intersections are nodes and roads are edges. Each edge is weighted using predicted travel time, allowing routing algorithms like A* to compute the fastest path.”
+
+Routing Algorithm
+Algorithm: A* Search
+
+Why A*?
+
+• Efficient shortest-path algorithm
+• Uses heuristics to speed up search
+• Widely used in navigation systems
+
+Programming Language & Tools
+Python
+
+Libraries:
+
+NumPy / Pandas (data processing)
+
+NetworkX or similar (graph routing)
+
+Scikit-learn (statistical models)
+
+PyTorch or simple bandit algorithms (learning component)
+
+Experiment Plan
+Build a baseline routing system using current traffic only.
+
+Add statistical traffic forecasting.
+
+Implement learning-based route selection.
+
+Compare performance across different traffic scenarios and time periods.
+
+Baseline Comparison
+Shortest path (with no traffic)
+Current traffic only
+Our method (ML + A*)
+
+Expected Outcome of the Project
+The expected outcomes include:
+A routing system that avoids roads likely to become congested in the near future
+
+Improved average travel time compared to baseline routing
+
+More reliable routes with lower worst-case delays
+
+Demonstration that learning-based route selection adapts better to traffic patterns than static approaches
+
+Evaluation Strategy
+Train/ validation/ test split
+Evaluate on unseen data 
+Metrics
+Avg travel time
+Worst-case 
+
+Criteria for Evaluation
+The system will be evaluated using:
+
+Average travel time
+
+Worst-case (90th percentile) travel time
+
+Travel time regret compared to the best route in hindsight
+
+Comparison against:
+
+Shortest-path routing
+
+Current-traffic-only routing
+
+Related Work / Background Materials
+If the project scope is adjusted or simplified, the following references provide foundational support:
+
+Time-Dependent Shortest Path Algorithms
+Cooke & Halsey, “The Shortest Route Through a Network with Time-Dependent Internodal Transit Times”
+
+Traffic Prediction Using Historical Data
+Vlahogianni et al., “Short-term traffic forecasting: Where we are and where we’re going”
+
+Learning-Based Routing / Bandits
+Agrawal & Goyal, “Thompson Sampling for Contextual Bandits”
+
+
+These works motivate the use of predictive modeling and learning-based decision making in routing problems.
+
+Summary
+This project explores how statistical traffic prediction combined with reinforcement learning can produce smarter route recommendations that anticipate congestion rather than react to it. By focusing on Los Angeles traffic patterns and individual ETA optimization, the project demonstrates a practical application of machine learning to real-world transportation systems.
