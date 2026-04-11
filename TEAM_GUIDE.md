@@ -47,7 +47,7 @@ Read this first if you want to get up to speed quickly.
 | Goal | Run / open | What you should get |
 |---|---|---|
 | explore the main dataset | `notebooks/03_largest_gla_exploration.ipynb` | dataset shape, time range, metadata, adjacency, maps, temporal plots |
-| run the forecasting baseline | `./venv/bin/python src/run_baseline_experiment.py` | baseline metrics in terminal and CSV outputs |
+| run the forecasting baseline | `python src/run_baseline_experiment.py` from your activated project environment | baseline metrics in terminal and CSV outputs |
 | inspect summarized baseline results | `results/baseline_summary.csv` | average performance by model |
 
 ## Main Files

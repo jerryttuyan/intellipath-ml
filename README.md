@@ -15,10 +15,27 @@ Traffic forecasting project for COMP 542.
 - Current baseline path: `src/run_baseline_experiment.py`
 - Main exploration notebook: `notebooks/03_largest_gla_exploration.ipynb`
 
+## Environment
+
+Everyone should use an isolated Python environment for this repo.
+
+`venv` is the simplest shared default, but the exact environment name does not matter as long as:
+
+- you install the repo requirements into it
+- you use that same environment for scripts and notebooks
+
+Example setup:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
 ## Quick Run
 
 ```bash
-./venv/bin/python src/run_baseline_experiment.py
+python src/run_baseline_experiment.py
 ```
 
 This writes baseline metrics to:
