@@ -1,0 +1,46 @@
+{
+  "description": "Required forecasting evaluation matrix for project reporting.",
+  "base_preset": "report_baseline",
+  "runs": [
+    {
+      "name": "h15_slice0",
+      "overrides": {
+        "horizon": 15,
+        "target_node_index": 0
+      }
+    },
+    {
+      "name": "h15_slice200",
+      "overrides": {
+        "horizon": 15,
+        "target_node_index": 200
+      }
+    },
+    {
+      "name": "h30_slice0",
+      "overrides": {
+        "horizon": 30,
+        "target_node_index": 0
+      }
+    },
+    {
+      "name": "h30_slice200",
+      "overrides": {
+        "horizon": 30,
+        "target_node_index": 200
+      }
+    },
+    {
+      "name": "routing_h15_slice0_rf",
+      "type": "routing",
+      "overrides": {
+        "horizon": 15,
+        "start_index": 0,
+        "num_nodes": 200,
+        "num_timestamps": 20,
+        "num_od_pairs": 100,
+        "prediction_model": "random_forest"
+      }
+    }
+  ]
+}

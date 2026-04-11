@@ -12,6 +12,9 @@ CONFIG: Dict[str, Any] = {
     "num_target_nodes": 10,  # evaluate this many consecutive nodes when target_node is None
     "train_ratio": 0.7,
     "val_ratio": 0.15,
+    "rf_n_estimators": 100,  # more trees can improve stability but increases runtime
+    "rf_random_state": 42,  # keep fixed for reproducible team comparisons
+    "rf_n_jobs": -1,  # -1=all cores, 1=single core, or any positive int for a core cap
     "results_path": "results/baseline_comparison.csv",
     "summary_results_path": "results/baseline_summary.csv",
 }

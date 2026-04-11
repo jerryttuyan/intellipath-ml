@@ -2,7 +2,7 @@
 
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from typing import Union
+from typing import Optional, Union
 
 
 class RandomForestBaseline:
@@ -10,15 +10,25 @@ class RandomForestBaseline:
     A baseline model using Random Forest Regressor for regression tasks.
     """
 
-    def __init__(self, n_estimators: int = 100, random_state: int = 42):
+    def __init__(
+        self,
+        n_estimators: int = 100,
+        random_state: int = 42,
+        n_jobs: Optional[int] = 1,
+    ):
         """
         Initialize the Random Forest baseline model.
 
         Args:
             n_estimators: Number of trees in the forest.
             random_state: Random state for reproducibility.
+            n_jobs: Number of parallel jobs for tree training (-1 uses all cores).
         """
-        self.model = RandomForestRegressor(n_estimators=n_estimators, random_state=random_state)
+        self.model = RandomForestRegressor(
+            n_estimators=n_estimators,
+            random_state=random_state,
+            n_jobs=n_jobs,
+        )
 
     def fit(self, X: pd.DataFrame, y: pd.Series) -> None:
         """

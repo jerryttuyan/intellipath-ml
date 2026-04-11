@@ -1,0 +1,10 @@
+{
+  "horizon": 15,
+  "num_target_nodes": 50,
+  "rf_n_estimators": 25,
+  "rf_random_state": 42,
+  "target_node": null,
+  "target_node_index": 0,
+  "train_ratio": 0.7,
+  "val_ratio": 0.15
+}

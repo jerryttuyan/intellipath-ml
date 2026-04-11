@@ -12,6 +12,8 @@
 - [ ] expand the baseline run beyond the current 10-node sample
 - [ ] add clearer plots / summaries for model comparison
 - [ ] decide whether the next model stays tabular or becomes graph-based
+- [ ] run repeatable routing comparison (shortest-distance vs current-traffic vs predicted-traffic)
+- [ ] add routing metric summaries (avg travel time, p90 travel time, regret) for report
 
 ## Open questions
 - forecasting only, or routing + forecasting in the presentation?
