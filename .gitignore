@@ -17,6 +17,9 @@ venv/
 # Logs
 *.log
 
+# Generated experiment outputs
+results/
+
 # Data (optional - uncomment if needed)
 # data/processed/
 # data/interim/

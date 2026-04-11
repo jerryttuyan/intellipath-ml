@@ -1,17 +1,23 @@
 """Loader for GLA dataset."""
 
-import pandas as pd
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Union
+
+import pandas as pd
 
 
-def load_traffic_data(file_path: str, node_ids: Optional[List[int]] = None) -> pd.DataFrame:
+NodeSelector = Union[int, str]
+
+
+def load_traffic_data(file_path: str, node_ids: Optional[List[NodeSelector]] = None) -> pd.DataFrame:
     """
     Load traffic flow data from an HDF5 file.
 
     Args:
         file_path: Path to the HDF5 file containing traffic data.
-        node_ids: Optional list of node IDs to select. If None, loads all nodes.
+        node_ids: Optional list of node selectors to select. String values are treated
+            as sensor IDs. Integer values are first treated as sensor IDs, then as
+            positional column indices if no matching sensor ID exists.
 
     Returns:
         DataFrame with timestamp index and node IDs as columns.
@@ -40,11 +46,24 @@ def load_traffic_data(file_path: str, node_ids: Optional[List[int]] = None) -> p
 
     # Select subset of nodes if specified
     if node_ids is not None:
-        node_ids_str = [str(node_id) for node_id in node_ids]
-        missing_nodes = set(node_ids_str) - set(df.columns)
+        selected_columns: List[str] = []
+        missing_nodes: List[str] = []
+
+        for node_id in node_ids:
+            node_label = str(node_id)
+            if node_label in df.columns:
+                selected_columns.append(node_label)
+                continue
+
+            if isinstance(node_id, int) and 0 <= node_id < len(df.columns):
+                selected_columns.append(str(df.columns[node_id]))
+                continue
+
+            missing_nodes.append(node_label)
+
         if missing_nodes:
             raise ValueError(f"Node IDs not found in data: {missing_nodes}")
-        df = df[node_ids_str]
+        df = df[selected_columns]
 
     return df
 
@@ -79,8 +98,9 @@ if __name__ == "__main__":
     # Example usage
     file_path = "data/raw/LargeST/gla/gla_his_2019.h5"
     try:
-        df = load_traffic_data(file_path, node_ids=[0, 1, 2])  # Load first 3 nodes
+        df = load_traffic_data(file_path, node_ids=[0, 1, 2])  # Load first 3 nodes by position
         print(f"Loaded data shape: {df.shape}")
+        print(f"Selected node labels: {df.columns.tolist()}")
         print(f"Time range: {df.index.min()} to {df.index.max()}")
 
         train, val, test = chronological_split(df)

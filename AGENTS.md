@@ -1,79 +1,45 @@
 # AGENTS.md
 
-This is the quick catch-up file for humans and coding agents working in this repo.
+Agent-only workflow notes for this repo.
 
-Update it whenever a major project decision changes.
+Humans should start with `TEAM_GUIDE.md`.
 
-## Project snapshot
+Agents should read `TEAM_GUIDE.md` first, then this file.
 
-- Project: IntelliPath
-- Course: COMP 542 Machine Learning with AI
-- Goal: build a traffic prediction / route assistance ML project that is realistic enough for a course demo but still manageable for a student team
+## Source Of Truth
 
-## Current dataset decision
+- `TEAM_GUIDE.md` is the main human-readable project status file.
+- `TASKS.md` is the current working checklist.
+- `PROJECT_CONTEXT.md` is the short planning summary.
+- If you change project direction, baseline workflow, or recommended next steps, update `TEAM_GUIDE.md` in the same change.
 
-- Primary dataset candidate: LargeST GLA 2019
-- Fallback / comparison dataset: METR-LA
-- Why the team is leaning toward LargeST-GLA:
-  - one full year of data in 2019
-  - much larger LA-area graph
-  - METR-LA appears to be mostly embedded inside the GLA subset
+## Current Working Assumptions
 
-## Current known data facts
+- Main dataset: `LargeST-GLA 2019`
+- Fallback dataset: `METR-LA`
+- Current starter task: traffic flow forecasting at `15 minutes ahead`
+- Main exploration notebook: `notebooks/03_largest_gla_exploration.ipynb`
+- Main repeatable experiment: `src/run_baseline_experiment.py`
 
-- METR-LA local file:
-  - `data/raw/METR-LA-Complete/metr-la.h5`
-  - shape: `34272 x 207`
-  - time range: `2012-03-01 00:00:00` to `2012-06-27 23:55:00`
+## Repo Safety Rules
 
-- LargeST-GLA local generated files:
-  - `data/raw/LargeST/gla/gla_his_2019.h5`
-  - `data/raw/LargeST/gla/gla_meta.csv`
-  - `data/raw/LargeST/gla/gla_rn_adj.npy`
-  - flow shape: `35040 x 3834`
-  - time range: `2019-01-01 00:00:00` to `2019-12-31 23:45:00`
-  - adjacency shape: `3834 x 3834`
-
-## Important repo rules
-
-- Do not commit LargeST raw or generated data to git.
+- Do not commit LargeST raw or generated data.
 - LargeST data stays local under `data/raw/LargeST/`.
-- Use `LARGEST_GLA_SETUP.md` for download / generation instructions.
-- Commit notebooks, docs, loaders, and small metadata only.
+- Use `LARGEST_GLA_SETUP.md` for dataset setup instructions.
+- Avoid changing unrelated files.
+- Keep docs concise and synchronized when making project-level decisions.
 
-## Current useful notebooks
+## Good First Actions For Any Agent
 
-- `notebooks/01_metr_la_exploration.ipynb`
-  - first-pass METR-LA exploration
+1. Read `TEAM_GUIDE.md`.
+2. Read `TASKS.md`.
+3. Confirm whether `data/raw/LargeST/gla/` exists locally.
+4. Review `notebooks/03_largest_gla_exploration.ipynb` before proposing dataset changes.
+5. Review `src/run_baseline_experiment.py` before changing the forecasting baseline flow.
 
-- `notebooks/02_largest_gla_feasibility.ipynb`
-  - checks whether LargeST-GLA is present and summarizes feasibility
+## When Updating The Repo
 
-- `notebooks/03_largest_gla_exploration.ipynb`
-  - main exploratory notebook for LargeST-GLA 2019
-  - includes metadata inspection, graph summary, temporal patterns, and geographic comparison with METR-LA
-
-## Recommended next engineering steps
-
-1. Create a small reusable loader in `src/` for:
-   - `gla_his_2019.h5`
-   - `gla_meta.csv`
-   - `gla_rn_adj.npy`
-2. Define the first prediction target clearly.
-   - recommended starting point: short-horizon traffic flow forecasting, `15 minutes ahead`
-3. Define a chronological train / validation / test split within 2019.
-4. Implement a persistence baseline first.
-5. Add one simple non-deep-learning baseline before larger graph models.
-
-## Open questions
-
-- Should the project focus only on forecasting, or still keep a route-assistance framing in the presentation?
-- Should the first experiments use all 3834 nodes or start with a smaller subgraph for speed?
-- Which evaluation horizon should be primary: 15 minutes, 30 minutes, or 60 minutes ahead?
-
-## Good first actions for any agent
-
-1. Read `AGENTS.md`, `PROJECT_CONTEXT.md`, and `TASKS.md`.
-2. Check whether `data/raw/LargeST/gla/` exists locally.
-3. Review `notebooks/03_largest_gla_exploration.ipynb`.
-4. Avoid changing unrelated files or committing large local data.
+- Put reusable logic in `src/`, not only in notebooks.
+- Keep human-facing explanations in `TEAM_GUIDE.md`.
+- Keep agent-specific guardrails in `AGENTS.md`.
+- Prefer updating existing docs over creating new overlapping docs.

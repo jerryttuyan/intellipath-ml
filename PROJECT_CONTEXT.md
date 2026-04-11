@@ -1,38 +1,28 @@
 # Project Context
 
-## Project
-IntelliPath
-
-## Course
-COMP 542 Machine Learning with AI
+Short planning summary. For the quick human-readable catch-up, use `TEAM_GUIDE.md`.
 
 ## Goal
-Build an ML-based traffic prediction / route assistance system.
 
-## Dataset
-Primary working dataset: LargeST GLA 2019
+Build a manageable course project around traffic forecasting, with route assistance kept as a presentation framing if useful.
 
-Comparison / fallback dataset: METR-LA
+## Current Direction
 
-## Current plan
-1. Explore LargeST-GLA and compare it with METR-LA
-2. Build a reusable GLA data loader
-3. Define target and chronological train/val/test split
-4. Create a persistence baseline
-5. Add one simple ML baseline
-6. Evaluate with clear metrics and presentation-friendly visuals
+- Main dataset: `LargeST-GLA 2019`
+- Fallback dataset: `METR-LA`
+- Main task: short-horizon traffic flow forecasting
+- Starting horizon: `15 minutes ahead`
 
-## Current status
-- LargeST CA data has been downloaded locally and the GLA subset has been generated
-- LargeST-GLA 2019 is the leading dataset candidate
-- exploratory notebooks exist for both METR-LA and LargeST-GLA
+## Current Plan
 
-## Evaluation
-- RMSE / MAE for prediction
-- compare against baseline
-- discuss strengths/weaknesses
+1. Keep `LargeST-GLA` as the primary experiment dataset.
+2. Use notebooks for exploration and presentation visuals.
+3. Keep reusable experiment logic in `src/`.
+4. Compare a simple persistence baseline against stronger tabular baselines first.
+5. Decide later whether to move into graph-based forecasting models.
 
 ## Constraints
-- student project
+
+- student project scope
 - limited time
-- should be presentation-friendly
+- needs to be presentation-friendly

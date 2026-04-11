@@ -24,6 +24,13 @@ def create_features(df: pd.DataFrame, target_node: str, horizon: int = 1) -> Tup
     if horizon <= 0:
         raise ValueError("Horizon must be positive")
 
+    # Include the current observed value and several historical lags.
+    # For forecasting, the current value is available at prediction time and
+    # gives the persistence baseline a proper "last observed value" feature.
+    current_features = {
+        'current_value': df[target_node]
+    }
+
     # Create lag features
     lags = [1, 2, 3, 6]
     lag_features = {}
@@ -37,7 +44,7 @@ def create_features(df: pd.DataFrame, target_node: str, horizon: int = 1) -> Tup
     }
 
     # Combine all features
-    X = pd.DataFrame({**lag_features, **time_features})
+    X = pd.DataFrame({**current_features, **lag_features, **time_features})
 
     # Create target
     y = df[target_node].shift(-horizon)
