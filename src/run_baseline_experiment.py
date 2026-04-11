@@ -33,8 +33,9 @@ def main():
     # Persistence baseline
     print("Evaluating persistence baseline...")
     persistence_model = PersistenceBaseline()
-    # For persistence, predict using the last value from train for all test
-    y_pred_persistence = pd.Series([train_df[target_node].iloc[-1]] * len(y_test), index=y_test.index)
+    persistence_model.fit(X_train, y_train)
+    persisted_value = persistence_model.predict(y_train)
+    y_pred_persistence = pd.Series([persisted_value] * len(y_test), index=y_test.index)
     mae_persistence = mae(y_test, y_pred_persistence)
     rmse_persistence = rmse(y_test, y_pred_persistence)
 

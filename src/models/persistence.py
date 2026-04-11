@@ -1,7 +1,7 @@
 """Persistence baseline model."""
 
 import pandas as pd
-from typing import Dict, Union
+from typing import Dict, Optional, Union
 
 
 class PersistenceBaseline:
@@ -11,33 +11,45 @@ class PersistenceBaseline:
     The model predicts that the future value will be the same as the most recent observed value.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the persistence model."""
-        pass
+        self.last_value: Optional[float] = None
 
-    def fit(self, X: pd.DataFrame, y: pd.Series) -> None:
+    def fit(self, X: pd.DataFrame, y: Union[pd.Series, pd.DataFrame]) -> None:
         """
-        Fit the model. For persistence, this does nothing.
+        Fit the model by storing the most recent observed target value.
 
         Args:
             X: Feature DataFrame (ignored).
-            y: Target Series (ignored).
+            y: Target Series or DataFrame containing history.
         """
-        pass  # No fitting required for persistence
+        if isinstance(y, pd.DataFrame):
+            y_series = y.iloc[:, -1]
+        else:
+            y_series = y
 
-    def predict(self, history: pd.Series) -> float:
+        if len(y_series) == 0:
+            raise ValueError("Target history cannot be empty")
+
+        self.last_value = float(y_series.iloc[-1])
+
+    def predict(self, history: Union[pd.Series, pd.DataFrame]) -> float:
         """
         Predict the next value using persistence.
 
         Args:
-            history: Series of historical values.
+            history: Historical values as a Series or DataFrame.
 
         Returns:
             The most recent value as the prediction.
         """
+        if isinstance(history, pd.DataFrame):
+            history = history.iloc[:, -1]
+
         if len(history) == 0:
             raise ValueError("History cannot be empty")
-        return history.iloc[-1]
+
+        return float(history.iloc[-1])
 
 
 def evaluate_persistence(y_true: pd.Series, y_pred: pd.Series) -> Dict[str, float]:

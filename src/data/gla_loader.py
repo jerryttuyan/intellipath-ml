@@ -27,22 +27,24 @@ def load_traffic_data(file_path: str, node_ids: Optional[List[int]] = None) -> p
     # Load data from HDF5
     df = pd.read_hdf(file_path, key="t")
 
-    # Convert index to datetime
+    # Convert index to datetime and sort by timestamp
     df.index = pd.to_datetime(df.index)
-
-    # Sort by timestamp
     df = df.sort_index()
 
-    # Validate monotonic index
+    # Ensure columns are string labels so downstream code can refer to node IDs consistently
+    df.columns = df.columns.astype(str)
+
+    # Validate monotonic index after sorting
     if not df.index.is_monotonic_increasing:
         raise ValueError("Timestamp index is not monotonic increasing")
 
     # Select subset of nodes if specified
     if node_ids is not None:
-        missing_nodes = set(node_ids) - set(df.columns)
+        node_ids_str = [str(node_id) for node_id in node_ids]
+        missing_nodes = set(node_ids_str) - set(df.columns)
         if missing_nodes:
             raise ValueError(f"Node IDs not found in data: {missing_nodes}")
-        df = df[node_ids]
+        df = df[node_ids_str]
 
     return df
 

@@ -30,6 +30,8 @@ def mae(y_true: Union[np.ndarray, pd.Series, pd.DataFrame],
         raise ValueError(f"Input lengths do not match: {len(y_true)} vs {len(y_pred)}")
 
     mask = ~(np.isnan(y_true) | np.isnan(y_pred))
+    if np.sum(mask) == 0:
+        raise ValueError("No valid values to compare after dropping NaNs")
     return np.mean(np.abs(y_true[mask] - y_pred[mask]))
 
 
@@ -58,6 +60,8 @@ def rmse(y_true: Union[np.ndarray, pd.Series, pd.DataFrame],
         raise ValueError(f"Input lengths do not match: {len(y_true)} vs {len(y_pred)}")
 
     mask = ~(np.isnan(y_true) | np.isnan(y_pred))
+    if np.sum(mask) == 0:
+        raise ValueError("No valid values to compare after dropping NaNs")
     return np.sqrt(np.mean((y_true[mask] - y_pred[mask]) ** 2))
 
 
